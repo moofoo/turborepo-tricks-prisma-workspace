@@ -81,7 +81,7 @@ export default function useData() {
 
 ### Simplifies generating prisma client (with Turborepo)
 
-`packages/prisma-client/package.json'
+`packages/prisma-client/package.json`
 
 ```json
 {
