@@ -1,0 +1,68 @@
+version: '3.8'
+name: turborepo-tricks-bad
+
+x-defaults:
+  &defaults
+  init: true
+  tty: true
+
+volumes:
+  app_db_data:
+
+
+services:
+  db:
+    <<: *defaults
+    image: postgres:15.3-alpine3.17
+    ports:
+      - '5432:5432'
+    volumes:
+      - app_db_data:/var/lib/postgresql/data
+      - type: bind
+        source: ./db
+        target: /docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: postgres_password
+
+  frontend:
+    <<: *defaults
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    command: yarn workspace frontend dev
+    environment:
+      - PORT=3000
+    build:
+      args:
+        APP: frontend
+        START_COMMAND: dev
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.bad
+    volumes:
+      - ./apps/frontend:/app/apps/frontend
+      - /app/apps/frontend/node_modules
+      - /app/apps/frontend/.next
+
+  ####################################################################
+
+  backend:
+    <<: *defaults
+    depends_on:
+      - db
+    ports:
+      - "3333:3333"
+    command: yarn workspace backend start:dev
+    environment:
+      - PORT=3333
+      - IN_CONTAINER=1
+    build:
+      args:
+        APP: backend
+        START_COMMAND: start:dev
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.bad
+    volumes:
+      - ./apps/backend:/app/apps/backend
+      - /app/apps/backend/node_modules
+      - /app/apps/backend/dist

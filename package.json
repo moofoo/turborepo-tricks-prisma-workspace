@@ -1,0 +1,23 @@
+{
+  "name": "turborepo-tricks-prisma-workspace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/moofoo/turborepo-tricks-prisma-workspace.git",
+  "author": "moofoo <nathancookdev@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "turbo": "^1.10.1"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "yarn@1.22.19",
+  "scripts": {
+    "good": "docker compose -f docker-compose.good.yml",
+    "bad": "docker compose -f docker-compose.bad.yml",
+    "clean-good": "yarn good down -v && yarn good rm -s -f && docker image rm turborepo-tricks-good-frontend:latest turborepo-tricks-good-backend:latest",
+    "clean-bad": "yarn bad down -v && yarn bad rm -s -f && docker image rm turborepo-tricks-bad-frontend:latest turborepo-tricks-bad-backend:latest"
+  }
+}

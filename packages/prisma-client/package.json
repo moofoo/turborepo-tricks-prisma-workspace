@@ -1,0 +1,24 @@
+{
+  "name": "prisma-client",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "files": [
+    "src/index.ts"
+  ],
+  "repository": "https://github.com/moofoo/turborepo-tricks-prisma-workspace.git",
+  "author": "moofoo <nathancookdev@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "npx -y rimraf dist/* && prisma generate && npx tsc"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.15.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "prisma": "^4.15.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.3"
+  }
+}
