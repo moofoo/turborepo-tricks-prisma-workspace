@@ -9,6 +9,10 @@ import createEmotionCache from '../createEmotionCache';
 import Layout from '@/layout';
 import _ from 'lodash';
 
+
+import '@ag-grid-community/styles/ag-grid.css';
+import '@ag-grid-community/styles/ag-theme-balham.min.css';
+
 const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {

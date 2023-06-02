@@ -6,7 +6,7 @@ import * as Icons from '@mui/icons-material';
 export default function Layout(props: any) {
       const { children } = props;
       return (
-            <Stack direction='column' sx={{ flexGrow: 1 }}>
+            <Stack direction='column' sx={{ flexGrow: 1, width: '100%', height: '100%' }}>
                   <AppBar position="static">
                         <Toolbar>
                               <IconButton
@@ -23,7 +23,7 @@ export default function Layout(props: any) {
                               </Typography>
                         </Toolbar>
                   </AppBar>
-                  <Box>
+                  <Box sx={{ width: '100%', height: '100%' }}>
                         {children}
                   </Box>
             </Stack>

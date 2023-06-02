@@ -13,9 +13,9 @@ export default function Home() {
 
   return (
     <MUI.Box
-      sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden", flexGrow: "1" }}
+      sx={{ height: "100%", display: "flex", flexDirection: "column", overflow: "hidden", flexGrow: "1" }}
     >
-      <MUI.Box className="ag-theme-balham pwpe-grid">
+      <MUI.Box className="ag-theme-balham" sx={{ height: 125 }}>
         <AgGridReact rowData={data} columnDefs={[{ field: "id" }, { field: "name" }, { field: "email" }]} modules={modules} />
       </MUI.Box>
     </MUI.Box>

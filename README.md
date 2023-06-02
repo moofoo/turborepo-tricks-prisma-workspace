@@ -110,11 +110,11 @@ export default function useData() {
 
 With `prisma generate` in the build script, `turbo run build ...` will generate the prisma client for workspaces that have `prisma-client` as a dependency. This is particularly useful when it comes to writing Dockerfiles, since it makes it easier to write generic Dockerfiles for development.
 
-## Build time difference between `turbo run build --filter=service` and `turbo run build --filter=service^...`
+## Build time difference between `... --filter=service` and `... --filter=service^...`
 
 If you compare [docker-compose.good.yml](docker-compose.good.yml) and [docker-compose.bad.yml](docker-compose.bad.yml), you'll see that the only difference is whether the Node.js services use [Dockerfile.good](dockerfiles/Dockerfile.good) or [Dockerfile.bad](dockerfiles/Dockerfile.bad).
 
-The only difference in the Dockerfiles is on line 30
+The only difference between those Dockerfiles is on line 30
 
 `Dockerfile.good`
 
@@ -128,8 +128,40 @@ RUN turbo run build --no-cache --filter=${APP}^...
 RUN turbo run build --no-cache --filter=${APP}
 ```
 
-### Compare build times
+# PLEASE NOTE THAT THE `compare.sh` BASH SCRIPT RUNS `docker system prune -f` TO ACCURATELY COMPARE BUILD TIMES
+
+Run `compare.sh` to see the difference:
 
 ```console
-bash compare.sh
+$ bash compare.sh
+Cleaning up
+Building bad
+yarn run v1.22.19
+$ docker compose -f docker-compose.bad.yml build --no-cache -q
+Done in 155.18s.
+
+real    2m35.339s
+user    0m0.531s
+sys     0m0.230s
+Cleaning up
+Building good
+yarn run v1.22.19
+$ docker compose -f docker-compose.good.yml build --no-cache -q
+Done in 94.58s.
+
+real    1m34.768s
+user    0m0.498s
+sys     0m0.165s
 ```
+
+#
+
+### `--filter=workspace` : 2m35.339s
+
+#
+
+### `--filter=workspace^...` : 1m34.768s
+
+#
+
+(I intentionally didn't follow dependency best practices with the Frontend app to increase its build time, to make the difference between the two build commands more clear. The basic point is don't build workspaces if you don't need to)

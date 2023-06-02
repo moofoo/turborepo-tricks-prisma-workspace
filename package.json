@@ -18,6 +18,7 @@
     "good": "docker compose -f docker-compose.good.yml",
     "bad": "docker compose -f docker-compose.bad.yml",
     "clean-good": "yarn good down -v && yarn good rm -s -f && docker image rm turborepo-tricks-good-frontend:latest turborepo-tricks-good-backend:latest",
-    "clean-bad": "yarn bad down -v && yarn bad rm -s -f && docker image rm turborepo-tricks-bad-frontend:latest turborepo-tricks-bad-backend:latest"
+    "clean-bad": "yarn bad down -v && yarn bad rm -s -f && docker image rm turborepo-tricks-bad-frontend:latest turborepo-tricks-bad-backend:latest",
+    "clean": "yarn clean-good && yarn clean-bad && docker system prune -f"
   }
 }
